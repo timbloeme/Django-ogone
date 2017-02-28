@@ -14,6 +14,9 @@ try:
 except ImportError:
     # We do not need Django to used this package
     settings = {}
+else:
+    if not settings.configured:
+        settings.configure()
 
 #These four you probably want to change
 PSPID = getattr(settings, 'OGONE_PSPID', None)
