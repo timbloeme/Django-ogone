@@ -1,8 +1,8 @@
 import logging
 import datetime
 import urllib
-import urllib2
 import xml.dom.minidom
+from six import string_types
 
 log = logging.getLogger('django_ogone')
 
@@ -50,8 +50,8 @@ class Ogone(object):
         PROD_URL = settings.PROD_URL
         TEST_URL = settings.TEST_URL
 
-        assert isinstance(PROD_URL, unicode) or isinstance(PROD_URL, str)
-        assert isinstance(TEST_URL, unicode) or isinstance(TEST_URL, str)
+        assert isinstance(PROD_URL, string_types) or isinstance(PROD_URL, str)
+        assert isinstance(TEST_URL, string_types) or isinstance(TEST_URL, str)
 
         if production is None:
             production = settings.PRODUCTION
@@ -70,7 +70,7 @@ class Ogone(object):
         assert 'orderID' in data
         assert 'amount' in data
         # Make sure amount is an int
-        assert isinstance(data['amount'], (int, long)) or data['amount'].isdigit()
+        assert isinstance(data['amount'], (int,)) or data['amount'].isdigit()
 
         data['currency'] = data.get('currency') or settings.CURRENCY
         data['PSPID'] = settings.PSPID
@@ -260,7 +260,7 @@ class OgoneDirectLink(Ogone):
         assert 'orderID' in data or 'PAYID' in data
         assert 'amount' in data
         # Make sure amount is an int
-        assert isinstance(data['amount'], (int, long)) or data['amount'].isdigit()
+        assert isinstance(data['amount'], (int,)) or data['amount'].isdigit()
 
         data['PSPID'] = settings.PSPID
         data['USERID'] = settings.USERID
@@ -273,10 +273,10 @@ class OgoneDirectLink(Ogone):
     def request(cls, url, data, settings=ogone_settings):
         params = cls.get_data(data, settings)
 
-        request = urllib2.Request(url)
+        request = urllib.Request(url)
         request.add_header("Content-type", "application/x-www-form-urlencoded")
         params = urllib.urlencode(params)
-        response = urllib2.urlopen(request, params)
+        response = urllib.request.urlopen(request, params)
 
         xml_str = response.read()
         log.info('DirectLink response: %s', xml_str)
