@@ -70,7 +70,7 @@ class Ogone(object):
         assert 'orderID' in data
         assert 'amount' in data
         # Make sure amount is an int
-        assert isinstance(data['amount'], (int, long)) or data['amount'].isdigit()
+        assert isinstance(data['amount'], (int)) or data['amount'].isdigit()
 
         data['currency'] = data.get('currency') or settings.CURRENCY
         data['PSPID'] = settings.PSPID
@@ -260,7 +260,7 @@ class OgoneDirectLink(Ogone):
         assert 'orderID' in data or 'PAYID' in data
         assert 'amount' in data
         # Make sure amount is an int
-        assert isinstance(data['amount'], (int, long)) or data['amount'].isdigit()
+        assert isinstance(data['amount'], (int)) or data['amount'].isdigit()
 
         data['PSPID'] = settings.PSPID
         data['USERID'] = settings.USERID
