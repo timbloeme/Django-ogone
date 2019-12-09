@@ -50,8 +50,8 @@ class Ogone(object):
         PROD_URL = settings.PROD_URL
         TEST_URL = settings.TEST_URL
 
-        assert isinstance(PROD_URL, unicode) or isinstance(PROD_URL, str)
-        assert isinstance(TEST_URL, unicode) or isinstance(TEST_URL, str)
+        assert isinstance(PROD_URL, str) or isinstance(PROD_URL, str)
+        assert isinstance(TEST_URL, str) or isinstance(TEST_URL, str)
 
         if production is None:
             production = settings.PRODUCTION
@@ -241,8 +241,8 @@ class OgoneDirectLink(Ogone):
         PROD_URL = settings.DIRECT_LINK_PROD_URL
         TEST_URL = settings.DIRECT_LINK_TEST_URL
 
-        assert isinstance(PROD_URL, unicode) or isinstance(PROD_URL, str)
-        assert isinstance(TEST_URL, unicode) or isinstance(TEST_URL, str)
+        assert isinstance(PROD_URL, str) or isinstance(PROD_URL, str)
+        assert isinstance(TEST_URL, str) or isinstance(TEST_URL, str)
 
         if production is None:
             production = settings.PRODUCTION
