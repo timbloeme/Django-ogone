@@ -1,7 +1,7 @@
 import logging
 import datetime
 import urllib
-import urllib2
+from urllib.request import urlopen, Request
 import xml.dom.minidom
 
 log = logging.getLogger('django_ogone')
@@ -273,10 +273,10 @@ class OgoneDirectLink(Ogone):
     def request(cls, url, data, settings=ogone_settings):
         params = cls.get_data(data, settings)
 
-        request = urllib2.Request(url)
+        request = Request(url)
         request.add_header("Content-type", "application/x-www-form-urlencoded")
         params = urllib.urlencode(params)
-        response = urllib2.urlopen(request, params)
+        response = urlopen(request, params)
 
         xml_str = response.read()
         log.info('DirectLink response: %s', xml_str)
